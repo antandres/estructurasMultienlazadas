@@ -31,7 +31,7 @@ class Grafo
         bool esNulo();
 
     //SETTERS
-        void setCantVert();
+        void setCantVert(int n);
         void setPrimero(NodoVertice<Elemento> * primero);
 
 };
@@ -118,6 +118,18 @@ template <typename Elemento>
 bool Grafo<Elemento>::esNulo()
 {
     return this->cantVertices;
+}
+
+template <typename Elemento>
+void Grafo<Elemento>::setCantVert(int n)
+{
+    this->cantVertices = n;
+}
+
+template <typename Elemento>
+void Grafo<Elemento>::setPrimero(NodoVertice<Elemento> * primero)
+{
+    this->primero = primero;
 }
 
 #endif
