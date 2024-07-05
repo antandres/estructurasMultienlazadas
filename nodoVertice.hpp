@@ -1,6 +1,8 @@
 #ifndef NODOVERTICE_H_
 #define NODOVERTICE_H_
-#include "nodoArco.hpp"
+
+template <typename Elemento>
+class NodoArco;
 
 template <typename Elemento>
 class NodoVertice
@@ -25,7 +27,6 @@ class NodoVertice
 template <typename Elemento>
 NodoVertice<Elemento>::NodoVertice()
 {
-    this->info = " ";
     this->proxArc = NULL;
     this->proxVert = NULL;
 }

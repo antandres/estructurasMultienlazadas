@@ -1,6 +1,5 @@
 #ifndef GRAFO_H_
 #define GRAFO_H_
-#include "nodoVertice.hpp"
 #include "nodoArco.hpp"
 #include <list>
 using namespace std;
@@ -13,12 +12,12 @@ class Grafo
         NodoVertice<Elemento> * primero;
     public:
     //CONSTRUCTORES
-        Grafo();
-        Grafo(Elemento v);
-        Grafo(list<Elemento> vertices);
+        void construir(); //PROBADO
+        void construir(Elemento v); //PROBADO
+        void construir(list<Elemento> vertices); //PROBADO
     
     //AGREGAR
-        void agregarVertice(Elemento v);
+        void agregarVertice(Elemento v); //PROBADO
         void agregarArco(Elemento vertice1, Elemento vertice2);
 
     //ELIMINAR
@@ -34,17 +33,21 @@ class Grafo
         void setCantVert(int n);
         void setPrimero(NodoVertice<Elemento> * primero);
 
+    //LISTAS
+        list<Elemento> vecinos();
+        list<Elemento> DFS();
+        list<Elemento> BFS();
 };
 
 template <typename Elemento>
-Grafo<Elemento>::Grafo()
+void Grafo<Elemento>::construir()
 {
     this->cantVertices = 0;
     this->primero = NULL;
 }
 
 template <typename Elemento>
-Grafo<Elemento>::Grafo(Elemento v)
+void Grafo<Elemento>::construir(Elemento v)
 {
     this->cantVertices = 1;
     this->primero = new NodoVertice<Elemento>;
@@ -52,7 +55,7 @@ Grafo<Elemento>::Grafo(Elemento v)
 }
 
 template <typename Elemento>
-Grafo<Elemento>::Grafo(list<Elemento> vertices)
+void Grafo<Elemento>::construir(list<Elemento> vertices)
 {
     NodoVertice<Elemento> * aux;
     if(this->cantVertices == 0)
@@ -65,7 +68,7 @@ Grafo<Elemento>::Grafo(list<Elemento> vertices)
     }
     while(!vertices.empty())
     {
-        aux->getProxVert() = new NodoVertice<Elemento>;
+        aux->setProxVert(new NodoVertice<Elemento>);
         aux->getProxVert()->crear(vertices.front(), NULL, NULL);
         vertices.pop_front();
         this->cantVertices = this->cantVertices + 1;
@@ -80,14 +83,16 @@ void Grafo<Elemento>::agregarVertice(Elemento v)
     NodoVertice<Elemento> * aux;
     if(this->cantVertices == 0)
     {
-        this->Grafo(v);
+        this->primero = new NodoVertice<Elemento>;
+        this->primero->setInfo(v);
+        this->cantVertices = this->cantVertices + 1;
     }
     else
     {
         aux = this->primero;
         while(aux->getProxVert() != NULL && !existe)
         {
-            if(aux->getInfo == v)
+            if(aux->getInfo() == v)
             {
                 existe = true;
             }
@@ -95,7 +100,7 @@ void Grafo<Elemento>::agregarVertice(Elemento v)
         }
         if(aux->getInfo() != v && !existe)
         {
-            aux->getProxVert() = new NodoVertice<Elemento>;
+            aux->setProxVert(new NodoVertice<Elemento>);
             aux->getProxVert()->crear(v, NULL, NULL);
             this->cantVertices = this->cantVertices + 1;
         }
@@ -117,7 +122,7 @@ NodoVertice<Elemento> *Grafo<Elemento>::getPrimero()
 template <typename Elemento>
 bool Grafo<Elemento>::esNulo()
 {
-    return this->cantVertices;
+    return !this->cantVertices;
 }
 
 template <typename Elemento>
