@@ -18,7 +18,7 @@ class Grafo
     
     //AGREGAR
         void agregarVertice(Elemento v); //PROBADO
-        void agregarArco(Elemento vertice1, Elemento vertice2);
+        void agregarArco(Elemento vertice1, Elemento vertice2, float peso); //PROBADO
 
     //ELIMINAR
         void eliminarArco(Elemento vertice1, Elemento vertice2);
@@ -34,9 +34,11 @@ class Grafo
         void setPrimero(NodoVertice<Elemento> * primero);
 
     //LISTAS
-        list<Elemento> vecinos();
         list<Elemento> DFS();
         list<Elemento> BFS();
+
+    //IMPRIMIR
+        void imprimirGrafo();
 };
 
 template <typename Elemento>
@@ -58,14 +60,11 @@ template <typename Elemento>
 void Grafo<Elemento>::construir(list<Elemento> vertices)
 {
     NodoVertice<Elemento> * aux;
-    if(this->cantVertices == 0)
-    {
-        this->primero = new NodoVertice<Elemento>;
-        this->primero->crear(vertices.front(), NULL, NULL);
-        vertices.pop_front();
-        this->cantVertices = this->cantVertices + 1;
-        aux = this->primero;
-    }
+    this->primero = new NodoVertice<Elemento>;
+    this->primero->crear(vertices.front(), NULL, NULL);
+    vertices.pop_front();
+    this->cantVertices = 1;
+    aux = this->primero;
     while(!vertices.empty())
     {
         aux->setProxVert(new NodoVertice<Elemento>);
@@ -103,6 +102,68 @@ void Grafo<Elemento>::agregarVertice(Elemento v)
             aux->setProxVert(new NodoVertice<Elemento>);
             aux->getProxVert()->crear(v, NULL, NULL);
             this->cantVertices = this->cantVertices + 1;
+        }
+    }
+}
+
+template <typename Elemento>
+void Grafo<Elemento>::agregarArco(Elemento v1, Elemento v2, float peso)
+{
+    NodoVertice<Elemento> *actual, *objetivo = NULL;
+    NodoArco<Elemento> *auxAct, *nuevo;
+    actual = this->getPrimero();
+    while((actual->getInfo() != v1)&&(actual->getProxVert() != NULL))
+    {
+        if(actual->getInfo() == v2)
+        {
+            objetivo = actual;
+        }
+        actual = actual->getProxVert();
+    }
+    if(actual->getInfo() != v1)
+    {
+        return;
+    }
+
+    if(objetivo == NULL)
+    {
+        objetivo = actual->getProxVert();
+        if(objetivo == NULL)
+        {
+            return;
+        }
+        while((objetivo->getInfo() != v2)&&(objetivo->getProxVert() != NULL))
+        {
+            objetivo = objetivo->getProxVert();
+        }
+        if(objetivo->getInfo() != v2)
+        {
+            return;
+        }
+    }
+    
+    if(actual->getProxArc() == NULL)
+    {
+        nuevo = new NodoArco<Elemento>;
+        nuevo->crear(peso, objetivo, NULL);
+        actual->setProxArc(nuevo);
+    }
+    else
+    {
+        auxAct = actual->getProxArc();
+        while((auxAct->getVertice() != objetivo)&&(auxAct->getProxArc() != NULL))
+        {
+            auxAct = auxAct->getProxArc();
+        }
+        if(auxAct->getVertice() == objetivo)
+        {
+            return;
+        }
+        else
+        {
+            nuevo = new NodoArco<Elemento>;
+            nuevo->crear(peso, objetivo, NULL);
+            auxAct->setProxArc(nuevo);
         }
     }
 }

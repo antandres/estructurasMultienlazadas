@@ -12,8 +12,8 @@ class NodoVertice
         NodoVertice<Elemento> *proxVert;
         NodoArco<Elemento> *proxArc;
     public:
-        NodoVertice();
-        NodoVertice(Elemento e);
+        void construir();
+        void construir(Elemento e);
         void crear(Elemento e, NodoVertice<Elemento>* proxVert, NodoArco<Elemento> * proxArc);
         Elemento getInfo();
         NodoVertice<Elemento> * getProxVert();
@@ -25,14 +25,14 @@ class NodoVertice
 };
 
 template <typename Elemento>
-NodoVertice<Elemento>::NodoVertice()
+void NodoVertice<Elemento>::construir()
 {
     this->proxArc = NULL;
     this->proxVert = NULL;
 }
 
 template <typename Elemento>
-NodoVertice<Elemento>::NodoVertice(Elemento e)
+void NodoVertice<Elemento>::construir(Elemento e)
 {
     this->info = e;
     this->proxArc = NULL;
