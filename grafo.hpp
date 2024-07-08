@@ -111,59 +111,62 @@ void Grafo<Elemento>::agregarArco(Elemento v1, Elemento v2, float peso)
 {
     NodoVertice<Elemento> *actual, *objetivo = NULL;
     NodoArco<Elemento> *auxAct, *nuevo;
-    actual = this->getPrimero();
-    while((actual->getInfo() != v1)&&(actual->getProxVert() != NULL))
+    if(v1 != v2)
     {
-        if(actual->getInfo() == v2)
+        actual = this->getPrimero();
+        while((actual->getInfo() != v1)&&(actual->getProxVert() != NULL))
         {
-            objetivo = actual;
+            if(actual->getInfo() == v2)
+            {
+                objetivo = actual;
+            }
+            actual = actual->getProxVert();
         }
-        actual = actual->getProxVert();
-    }
-    if(actual->getInfo() != v1)
-    {
-        return;
-    }
+        if(actual->getInfo() != v1)
+        {
+            return;
+        }
 
-    if(objetivo == NULL)
-    {
-        objetivo = actual->getProxVert();
         if(objetivo == NULL)
         {
-            return;
+            objetivo = actual->getProxVert();
+            if(objetivo == NULL)
+            {
+                return;
+            }
+            while((objetivo->getInfo() != v2)&&(objetivo->getProxVert() != NULL))
+            {
+                objetivo = objetivo->getProxVert();
+            }
+            if(objetivo->getInfo() != v2)
+            {
+                return;
+            }
         }
-        while((objetivo->getInfo() != v2)&&(objetivo->getProxVert() != NULL))
-        {
-            objetivo = objetivo->getProxVert();
-        }
-        if(objetivo->getInfo() != v2)
-        {
-            return;
-        }
-    }
-    
-    if(actual->getProxArc() == NULL)
-    {
-        nuevo = new NodoArco<Elemento>;
-        nuevo->crear(peso, objetivo, NULL);
-        actual->setProxArc(nuevo);
-    }
-    else
-    {
-        auxAct = actual->getProxArc();
-        while((auxAct->getVertice() != objetivo)&&(auxAct->getProxArc() != NULL))
-        {
-            auxAct = auxAct->getProxArc();
-        }
-        if(auxAct->getVertice() == objetivo)
-        {
-            return;
-        }
-        else
+        
+        if(actual->getProxArc() == NULL)
         {
             nuevo = new NodoArco<Elemento>;
             nuevo->crear(peso, objetivo, NULL);
-            auxAct->setProxArc(nuevo);
+            actual->setProxArc(nuevo);
+        }
+        else
+        {
+            auxAct = actual->getProxArc();
+            while((auxAct->getVertice() != objetivo)&&(auxAct->getProxArc() != NULL))
+            {
+                auxAct = auxAct->getProxArc();
+            }
+            if(auxAct->getVertice() == objetivo)
+            {
+                return;
+            }
+            else
+            {
+                nuevo = new NodoArco<Elemento>;
+                nuevo->crear(peso, objetivo, NULL);
+                auxAct->setProxArc(nuevo);
+            }
         }
     }
 }
