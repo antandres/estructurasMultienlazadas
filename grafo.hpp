@@ -201,4 +201,21 @@ void Grafo<Elemento>::setPrimero(NodoVertice<Elemento> * primero)
     this->primero = primero;
 }
 
+//IMPORTADA DE OTRA LIBRERIA
+template<typename Elemento>
+void Grafo<Elemento>::imprimirGrafo(){
+    NodoVertice<Elemento> *v = this->primero;  
+    while(v != NULL){
+        cout<< v->getInfo()<<" = ";
+        NodoArco<Elemento> *a = v->getProxArc();
+        while(a != nullptr){
+            //ESCRITURA DEL ARCO -> (origen,destino)[peso]
+            cout<< "("<< v->getInfo() << ", "<< a->getVertice()->getInfo() << ")[" << a->getPeso() <<"]  ";
+            a=a->getProxArc();
+        }
+        v=v->getProxVert();
+        cout<<endl;    
+    }
+}
+
 #endif

@@ -18,8 +18,10 @@ int main()
     prueba.agregarVertice(3);
     prueba.agregarVertice(4);
     prueba.agregarArco(3, 4, 0);
+    prueba.agregarArco(4, 3, 2);
+    prueba.imprimirGrafo();
    // prueba.agregarVertice(4);
     //prueba.agregarArco(3, 4);
-    cout << prueba.getPrimero()->getProxArc()->getVertice()->getInfo(); // 
+    //cout << prueba.getPrimero()->getProxArc()->getVertice()->getInfo(); // 
     return 0;
 }
