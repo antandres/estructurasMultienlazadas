@@ -3,6 +3,7 @@
 #include "nodoArco.hpp"
 #include <vector>
 #include <list>
+#include <queue>
 using namespace std;
 
 template <typename Elemento>
@@ -46,6 +47,10 @@ class Grafo
         list<Elemento> sucesores(Elemento v); //PROBADO
         list<Elemento> predecesores(Elemento v); //PROBADO
         list<Elemento> vertices();
+
+    //CAMINOS (DEBE ESTAR MAPEADO)
+        void DFS(int v, vector<bool> *visitados, list<int> *recorrido);
+        void BFS(int v, vector<bool> *visitados, list<int> *recorrido);
 
     //IMPRIMIR
         void imprimirGrafo(); //PROBADO
@@ -533,6 +538,54 @@ list<Elemento> Grafo<Elemento>::vertices()
         actual = actual->getProxVert();
     }
     return result;
+}
+
+template<>
+void Grafo<int>::DFS(int v, vector<bool> *visitados, list<int> *recorrido)
+{
+    int w;
+    recorrido->push_back(v);
+    list<int> sucesores = this->sucesores(v);
+    while(!sucesores.empty())
+    {
+        w = sucesores.front();
+        if(!visitados->at(w))
+        {
+            visitados->at(w) = true;
+            this->DFS(w, visitados, recorrido);
+        }
+        sucesores.pop_front();
+    }
+}
+
+template<>
+void Grafo<int>::BFS(int v, vector<bool> *visitados, list<int> *recorrido)
+{
+    queue<int> cola;
+    int w;
+    list<int> vecinos;
+    cola.push(v);
+    if(!visitados->empty())
+    {
+        visitados->at(v) = true;
+        while(!cola.empty())
+        {
+            v = cola.front();
+            vecinos = this->sucesores(v);
+            recorrido->push_back(v);
+            while(!vecinos.empty())
+            {
+                w = vecinos.front();
+                if(!visitados->at(w))
+                {
+                    cola.push(w);
+                    visitados->at(w) = true;
+                }
+                vecinos.pop_front();
+            }
+            cola.pop();
+        }
+    }
 }
 
 //IMPORTADA DE OTRA LIBRERIA

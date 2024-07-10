@@ -7,7 +7,8 @@ using namespace std;
 
 int main()
 {
-    list<string> lista;
+    list<int> lista;
+    list<string> listaString;
     vector<string> arreglo;
 
     //LLENADO DE LISTA
@@ -19,30 +20,30 @@ int main()
     lista.push_back(6);*/
 
 
-    GrafoNoDirigido <string> prueba;
-    GrafoNoDirigido<int> mapeado;
+    GrafoDirigido <string> prueba;
+    GrafoDirigido<int> mapeado;
     prueba.construir();
     //prueba.setCantVert(7);
     prueba.agregarVertice("hola");
     prueba.agregarVertice("andres");
     prueba.agregarVertice("games");
     prueba.agregarArco("games", "hola", 8);
-    prueba.agregarArco("games", "andres", 4);
-    lista = prueba.vecinos("andres");
+    prueba.agregarArco("hola", "andres",0);
     //mapeado = prueba.mapear(&arreglo);
     //mapeado.imprimirGrafo();
-
+    listaString = prueba.listaDFS("games");
+    //cout << endl << arreglo.at(prueba.buscarMapeo(arreglo, "games", prueba.getCantVert()));
 
     //lista = prueba.vertices();
     //prueba.agregarArco(4, 3, 0);
     //prueba.imprimirGrafo();
-    cout << endl << lista.front() << " ";
-    lista.pop_front();
-    /*cout << endl << lista.front() << " ";
-    /ista.pop_front();
-    cout << endl << lista.front();*/
+    cout << endl << listaString.front() << " ";
+    listaString.pop_front();
+    cout << endl << listaString.front() << " ";
+    listaString.pop_front();
+    cout << endl << listaString.front();
    // prueba.agregarVertice(4); 
-    //prueba.agregarArco(3, 4);
+    //prueba.agregarArco(3, 4); 
     //cout << prueba.getPrimero()->getProxArc()->getVertice()->getInfo(); //  
     return 0;
 }

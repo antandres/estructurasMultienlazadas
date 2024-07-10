@@ -8,7 +8,12 @@ template <typename Elemento>
 class GrafoDirigido: public Grafo<Elemento>
 {
     public:
+    //MAPEADO
         GrafoDirigido<int> mapear(vector<Elemento> *mapeo);
+        
+    //LISTAS
+        list<Elemento> listaDFS(Elemento inicio);
+        list<Elemento> listaBFS(Elemento inicio);
 };
 
 //IMPORTADA DE OTRA LIBRERIA
@@ -43,5 +48,55 @@ GrafoDirigido<int> GrafoDirigido<Elemento>::mapear(vector<Elemento> *mapeo){
 
     return grafo;
 }
+
+template <typename Elemento>
+list<Elemento> GrafoDirigido<Elemento>::listaDFS(Elemento inicio)
+{
+    vector<Elemento> mapeo;
+    GrafoDirigido<int> mapeado = this->mapear(&mapeo);
+    list<int> recorrido;
+    vector<bool> visitados;
+    int i = 0;
+    for(i; i < this->getCantVert(); i++)
+    {
+        visitados.emplace_back(false);
+    }
+    int v = this->buscarMapeo(mapeo, inicio, mapeado.getCantVert());
+    visitados.at(v) = true;
+    mapeado.DFS(v, &visitados, &recorrido);
+    
+    list<Elemento> recorridoFinal;
+    while(!recorrido.empty())
+    {
+        recorridoFinal.push_back(mapeo.at(recorrido.front()));
+        recorrido.pop_front();
+    }
+    return recorridoFinal;
+}
+
+template <typename Elemento>
+list<Elemento> GrafoDirigido<Elemento>::listaBFS(Elemento inicio)
+{
+    vector<Elemento> mapeo;
+    GrafoDirigido<int> mapeado = this->mapear(&mapeo);
+    list<int> recorrido;
+    vector<bool> visitados;
+    int i = 0;
+    for(i; i < this->getCantVert(); i++)
+    {
+        visitados.emplace_back(false);
+    }
+    int v = this->buscarMapeo(mapeo, inicio, mapeado.getCantVert());
+    mapeado.BFS(v, &visitados, &recorrido);
+    
+    list<Elemento> recorridoFinal;
+    while(!recorrido.empty())
+    {
+        recorridoFinal.push_back(mapeo.at(recorrido.front()));
+        recorrido.pop_front();
+    }
+    return recorridoFinal;
+}
+
 
 #endif
