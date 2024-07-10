@@ -22,9 +22,11 @@ int main()
     prueba.agregarVertice("games");
     prueba.agregarArco("games", "hola", 8);
     prueba.agregarArco("games", "andres", 4);
-    lista = prueba.predecesores("games");
+    lista = prueba.vertices();
     //prueba.agregarArco(4, 3, 0);
-    prueba.imprimirGrafo();
+    //prueba.imprimirGrafo();
+    cout << endl << lista.front() << " ";
+    lista.pop_front();
     cout << endl << lista.front() << " ";
     lista.pop_front();
     cout << endl << lista.front();

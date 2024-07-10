@@ -14,7 +14,7 @@ class Grafo
 
         //METODOS PRIVADOS
         list<Elemento> predecesores(NodoVertice<Elemento> *v);
-        
+
     public:
     //CONSTRUCTORES
         void construir(); //PROBADO
@@ -27,7 +27,7 @@ class Grafo
 
     //ELIMINAR
         void eliminarArco(Elemento v, Elemento w); //PROBADO
-        void eliminarVertice(Elemento v);
+        void eliminarVertice(Elemento v); //PROBADO
 
     //GETTERS Y VERIFICACIONES
         int getCantVert(); //PROBADO
@@ -35,7 +35,7 @@ class Grafo
         float getPesoArco(Elemento v, Elemento w); //PROBADO
         bool esNulo(); //PROBADO
         bool existeArco(Elemento v, Elemento w); //PROBADO
-        NodoVertice<Elemento> * getVertice(Elemento v);
+        NodoVertice<Elemento> * getVertice(Elemento v); //PROBADO
 
     //SETTERS
         void setCantVert(int n); //PROBADO
@@ -43,14 +43,15 @@ class Grafo
         void setPesoArco(Elemento v, Elemento w, float nuevoPeso); //PROBADO
 
     //LISTAS
-        list<Elemento> sucesores(Elemento v);
-        list<Elemento> predecesores(Elemento v);
+        list<Elemento> sucesores(Elemento v); //PROBADO
+        list<Elemento> predecesores(Elemento v); //PROBADO
+        list<Elemento> vertices();
 
     //IMPRIMIR
-        void imprimirGrafo();
+        void imprimirGrafo(); //PROBADO
 
     //MAPEO
-        int buscarMapeo(vector<Elemento> arreglo, Elemento elem, int dim);
+        int buscarMapeo(vector<Elemento> arreglo, Elemento elem, int dim); //PROBADO
 };
 
 template <typename Elemento>
@@ -518,6 +519,20 @@ list<Elemento> Grafo<Elemento>::predecesores(NodoVertice<Elemento> *v){
 template<typename Elemento>
 list<Elemento> Grafo<Elemento>::predecesores(Elemento v){
     return this->predecesores(this->getVertice(v));            
+}
+
+template<typename Elemento>
+list<Elemento> Grafo<Elemento>::vertices()
+{
+    list<Elemento> result;
+    NodoVertice<Elemento> *actual;
+    actual = this->primero;
+    while(actual != NULL)
+    {
+        result.push_back(actual->getInfo());
+        actual = actual->getProxVert();
+    }
+    return result;
 }
 
 //IMPORTADA DE OTRA LIBRERIA
