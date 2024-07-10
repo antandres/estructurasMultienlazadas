@@ -12,6 +12,7 @@ class NodoArco
     public:
         void construir();
         void crear(float peso, NodoVertice<Elemento> *vertice, NodoArco<Elemento> *proxArc);
+        Elemento getInfo();
         float getPeso();
         NodoVertice<Elemento> * getVertice();
         NodoArco<Elemento> * getProxArc();
@@ -34,6 +35,12 @@ void NodoArco<Elemento>::crear(float peso, NodoVertice<Elemento> *vertice, NodoA
     this->peso = peso;
     this->proxArc = proxArc;
     this->vertice = vertice;
+}
+
+template <typename Elemento>
+Elemento NodoArco<Elemento>::getInfo()
+{
+    return this->getVertice()->getInfo();
 }
 
 template <typename Elemento>
