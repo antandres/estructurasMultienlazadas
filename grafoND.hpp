@@ -8,8 +8,10 @@ template <typename Elemento>
 class GrafoNoDirigido: public Grafo<Elemento>
 {
     public:
+    //ARCOS NO DIRIGIDOS
         void agregarArco(Elemento v1, Elemento v2, float peso);
         void eliminarArco(Elemento v, Elemento w);
+    //REEMPLAZO DE SUCESORES
         list<Elemento> vecinos(Elemento v);
         GrafoNoDirigido<int> mapear(vector<Elemento> *mapeo);
 
@@ -196,6 +198,12 @@ void GrafoNoDirigido<Elemento>::eliminarArco(Elemento v, Elemento w)
             }
         }
     }   
+}
+
+template <typename Elemento>
+list<Elemento> GrafoNoDirigido<Elemento>::vecinos(Elemento v)
+{
+    return this->sucesores(v);
 }
 
 //IMPORTADA DE OTRA LIBRERIA
